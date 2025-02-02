@@ -1,7 +1,6 @@
 # 🎭 VRC Event Calendar Autofill
 
-このスクリプトは、**VRC Event Calendar** の登録フォームに自動で定型文を入力するためのものです。pythonで動作します。
-`config.json` を編集することで、誰でも簡単にイベントを登録できます️。🚀
+このスクリプトは、**VRC Event Calendar** の登録フォームに自動で定型文を入力するためのものです。pythonで動作し、Chromeブラウザを直接操作します。`config.json` に入力内容を記載して実行することで、手早くイベントを登録できます️。🚀
 
 ---
 
@@ -12,10 +11,15 @@
    - [ChromeDriver ダウンロードページ](https://googlechromelabs.github.io/chrome-for-testing/) から、**お使いのChromeと同じバージョン**の `chromedriver.exe` をダウンロード。
 4. **`chromedriver.exe` を Pythonの実行ファイルと同じフォルダに配置**
 5. **必要なライブラリをインストール**
+   ```bash
    pip install selenium
+   ```
 6. **`config.json` を編集**
 7. **スクリプトを実行**
+   ```bash
    python autofill.py
+   ```
+
 
 ---
 
@@ -49,8 +53,3 @@
   - 自動送信を有効にする場合は直前までの動作確認の上、 `autofill.py` 内の `submit_button.click()` のコメントを解除してください。
 
 ---
-
-## 📚 **関連リンク**
-- **ChromeDriver ダウンロードページ**: [公式サイト](https://sites.google.com/chromium.org/driver/)
-- **Python Selenium の公式ドキュメント**: [Selenium Python Bindings](https://www.selenium.dev/documentation/webdriver/)
-

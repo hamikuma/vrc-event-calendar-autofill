@@ -1,10 +1,13 @@
 import json
 import os
+import time
+import signal
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from datetime import datetime
+import time
 
 # ✅ スクリプトのあるフォルダから `config.json` を読み込む
 script_dir = os.path.dirname(os.path.abspath(__file__))  # 実行ファイルのディレクトリを取得
@@ -26,7 +29,15 @@ if not event_date:  # 空欄の場合は本日の日付を使用
 # Chrome WebDriverのセットアップ
 options = webdriver.ChromeOptions()
 options.add_argument("--start-maximized")  # ウィンドウを最大化
+options.add_experimental_option("detach", True)
 driver = webdriver.Chrome(options=options)
+
+# ✅ プログラム終了時に Selenium を安全に開放（バックグラウンドプロセスを解放）
+def cleanup():
+    try:
+        driver.quit()  # ✅ これで TensorFlow Lite のプロセスも解放される
+    except Exception:
+        pass
 
 # フォームを開く
 driver.get(config["form_url"])
@@ -112,18 +123,21 @@ try:
         overseas_checkbox = driver.find_element(By.XPATH, "//*[@id='i72']")
         overseas_checkbox.click()
 
-#    # 送信ボタンをクリック
-#    submit_button = driver.find_element(By.XPATH, "//span[contains(text(), '送信')]")
-#    submit_button.click()
 
-    print("Googleフォームへの自動入力が完了しました！")
+    # 送信ボタンをクリック
+    submit_button = driver.find_element(By.XPATH, "//span[contains(text(), '送信')]")
+    #送信まで自動化するなら動作確認の上、コメントアウトを外す
+    #submit_button.click()
+
+
 
 except Exception as e:
     print(f"エラーが発生しました: {e}")
 
-## ブラウザを閉じる
-#time.sleep(3)
-#driver.quit()
 
-# ブラウザを閉じずに開いたままにする
-input("Press Enter to exit and close the browser...")
+#処理を終了する
+time.sleep(10)
+os.kill(driver.service.process.pid,signal.SIGTERM)
+
+#ブラウザを閉じる場合
+#driver.quit()
