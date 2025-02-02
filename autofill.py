@@ -7,7 +7,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from datetime import datetime
-import time
 
 # ✅ スクリプトのあるフォルダから `config.json` を読み込む
 script_dir = os.path.dirname(os.path.abspath(__file__))  # 実行ファイルのディレクトリを取得
