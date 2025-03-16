@@ -2,20 +2,19 @@
 
 このスクリプトは、**VRC Event Calendar** の登録フォームに自動で定型文を入力するためのものです。pythonで動作し、Chromeブラウザを直接操作します。`config.json` に入力内容を記載して実行することで、手早くイベントを登録できます️。🚀
 
+3/17更新 VRCイベントカレンダーの新フォームに対応しました。
+
 ---
 
 ## 📌 使い方
 1. **pythonを導入**
-2. **Chromeブラウザのバージョンを確認**  
-3. **対応する ChromeDriver を取得**  
-   - [ChromeDriver ダウンロードページ](https://googlechromelabs.github.io/chrome-for-testing/) から、**お使いのChromeと同じバージョン**の `chromedriver.exe` をダウンロード。
-4. **`chromedriver.exe` を Pythonの実行ファイルと同じフォルダに配置**
-5. **必要なライブラリをインストール**
+2. **必要なライブラリをインストール**
    ```bash
    pip install selenium
+   pip install webdriver-manager
    ```
-6. **`config.json` を編集**
-7. **スクリプトを実行**
+3. **`config.json` を編集**
+4. **スクリプトを実行**
    ```bash
    python autofill.py
    ```
@@ -26,15 +25,18 @@
 ## 📝 `config.json` の設定項目
 
 `config.json` を編集して、Googleフォームに入力する内容を設定してください。
+`config.json` に記載の内容を見たら見様見真似で分かると思いますが、以下に説明を載せておきます。
 
 | **キー** | **内容** | **備考** |
 |---------|---------|---------|
-| `"email"` | メールアドレス |  |
+| `"profile_path"` | プロフィールパス | ブラウザのURL欄に"chrome://version/"と入力して、プロフィールパスに記載の内容を入力(User Data以降は不要。￥は/に置換する) |
+| `"form_url"` | フォームURL | フォームのURL。変更不要 |
 | `"event_name"` | イベント名 |  |
-| `"android_support"` | Android対応可否 | `"PCオンリー"`, `"PC/Android両対応"`, `"Android オンリー"` のいずれか |
-| `"event_date"` | 日付 | 空欄なら本日の日付が自動入力されます |
+| `"android_support"` | Android対応可否 | `"PC"`, `"PC/android"`, `"android only"` のいずれか |
+| `"start_date"` | 開始日付 | 空欄なら本日の日付が自動入力されます |
 | `"start_hour"` | 開始時刻（時） | `00` ~ `23` |
 | `"start_minute"` | 開始時刻（分） | `00` ~ `59` |
+| `"end_date"` | 終了日付 | 空欄なら本日の日付が自動入力されます |
 | `"end_hour"` | 終了時刻（時） | `00` ~ `23` |
 | `"end_minute"` | 終了時刻（分） | `00` ~ `59` |
 | `"event_host"` | イベント主催者 | |
@@ -45,11 +47,5 @@
 | `"remarks"` | 備考 | |
 | `"overseas_announcement"` | 海外向け告知 | `true` でチェックON、`false` でチェックOFF |
 | `"x_announcement"` | X告知文 | |
-
----
-
-## ⚠️ **注意点**
-- **最終送信ボタン (`送信` のクリック処理) は安全のためコメントアウト** しています。  
-  - 自動送信を有効にする場合は直前までの動作確認の上、 `autofill.py` 内の `submit_button.click()` のコメントを解除してください。
 
 ---
