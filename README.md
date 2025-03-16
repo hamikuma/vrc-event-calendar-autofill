@@ -14,7 +14,8 @@
    pip install webdriver-manager
    ```
 3. **`config.json` を編集**
-4. **スクリプトを実行**
+4. **Chromeブラウザで予めgoogleにログインしておく**
+5. **(Chromeブラウザを全て閉じてから)スクリプトを実行**
    ```bash
    python autofill.py
    ```
