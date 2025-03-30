@@ -81,7 +81,9 @@ driver.get(config["form_url"])
 # ========================
 # 本番処理：フォームの自動入力
 # ========================
+
 email_checkbox = wait.until(lambda d: d.find_element("xpath", "//div[@role='checkbox' and contains(@aria-label, '返信に表示するメールアドレス')]"))
+time.sleep(0.5)
 if config.get("record_the_email_address_to_reply"):
     if email_checkbox.get_attribute("aria-checked") != "true":
         email_checkbox.click()
