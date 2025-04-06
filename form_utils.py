@@ -16,6 +16,7 @@ def log_failure(message):
 # 共通操作関数
 # ========================
 def fill_input_by_label(driver, wait, label_text, value):
+    time.sleep(0.5)
     try:
         input_elem = wait.until(EC.presence_of_element_located((
             By.XPATH, f"//span[contains(text(), '{label_text}')]/ancestor::div[contains(@class, 'HoXoMd')]/following::input[@type='text'][1]"
@@ -27,6 +28,7 @@ def fill_input_by_label(driver, wait, label_text, value):
         log_failure(f"「{label_text}」の入力に失敗しました: {e}")
 
 def fill_textarea_by_label(driver, wait, label_text, value):
+    time.sleep(0.5)
     try:
         textarea_elem = wait.until(EC.presence_of_element_located((
             By.XPATH, f"//span[contains(text(), '{label_text}')]/ancestor::div[contains(@class, 'HoXoMd')]/following::textarea[1]"
@@ -38,6 +40,7 @@ def fill_textarea_by_label(driver, wait, label_text, value):
         log_failure(f"「{label_text}」のテキストエリア入力に失敗しました: {e}")
 
 def select_option_by_label(driver, wait, label_text, option_text):
+    time.sleep(0.5)
     try:
         label_elem = wait.until(EC.presence_of_element_located((
             By.XPATH, f"//span[contains(text(), '{label_text}')]"
@@ -59,6 +62,7 @@ def select_option_by_label(driver, wait, label_text, option_text):
         log_failure(f"「{label_text}」の選択に失敗しました: {e}")
 
 def click_button_by_text(driver, wait, button_text):
+    time.sleep(0.5)
     try:
         button = wait.until(EC.presence_of_element_located((
             By.XPATH, f"//div[@role='button' and .//span[text()='{button_text}']]"
@@ -79,6 +83,7 @@ def click_button_by_text(driver, wait, button_text):
         log_failure(f"「{button_text}」ボタンのクリックに失敗しました: {e}")
 
 def fill_datetime_by_label(driver, wait, label_text, date_str, hour_str, minute_str):
+    time.sleep(0.5)
     try:
         label_elem = wait.until(EC.presence_of_element_located((
             By.XPATH, f"//span[contains(text(), '{label_text}')]"
@@ -100,6 +105,7 @@ def fill_datetime_by_label(driver, wait, label_text, date_str, hour_str, minute_
         log_failure(f"「{label_text}」の日時入力に失敗しました: {e}")
 
 def check_multiple_checkboxes_by_labels(driver, wait, label_text, target_labels):
+    time.sleep(0.5)
     try:
         # ラベル要素の検索修正
         label_elem = wait.until(EC.presence_of_element_located((
@@ -126,6 +132,7 @@ def check_multiple_checkboxes_by_labels(driver, wait, label_text, target_labels)
         log_failure(f"「{label_text}」の複数選択チェックに失敗しました: {e}")
 
 def select_radio_by_label(driver, wait, label_text, option_text):
+    time.sleep(0.5)
     try:
         # ラベル要素取得
         label_elem = wait.until(EC.presence_of_element_located((
