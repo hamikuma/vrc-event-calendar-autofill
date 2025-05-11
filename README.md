@@ -7,20 +7,28 @@
 
 ## 🛠 構成ファイル
 
-- `autofill.py` … メイン処理（Googleフォームを開き、情報を入力）
+- `create_profile.py` … メイン処理その1（Googleアカウントの事前ログイン処理）
+- `autofill.py` … メイン処理その2（Googleフォームを開き、情報を入力）
 - `form_utils.py` … 入力・選択などの共通処理をまとめた関数群
 - `config.json` … 入力内容の設定ファイル
 - `requirements.txt` … 必要なPythonライブラリの一覧
 
 ## 📌 使い方
 1. **Chromeブラウザ、pythonをインストール（バージョン3.8以上推奨）**
-2. **必要なライブラリをインストール**
+2. **python実行環境でこのモジュールをクローン**
+   ```bash
+   git clone https://github.com/hamikuma/vrc-event-calendar-autofill.git
+   ```
+3. **必要なライブラリをインストール**
    ```bash
    pip install -r requirements.txt
    ```
-3. **`config.json` を編集してイベント内容を記入**
-4. **ChromeブラウザでGoogleアカウントにログイン済であることを確認する**
-5. **Chromeブラウザを全て閉じた状態でスクリプトを実行**
+4. **`config.json` を編集してイベント内容を記入**
+5. **`create_profile.py`を実行して、Googleアカウントにログイン(ログイン情報の作成)**
+   ```bash
+   python create_profile.py
+   ```
+6. **Chromeブラウザを全て閉じた状態で`autofill.py`を実行**
    ```bash
    python autofill.py
    ```
@@ -35,7 +43,7 @@
 
 | **キー** | **内容** | **備考** |
 |---------|---------|---------|
-| `"profile_path"` | Chromeのプロファイルパス | ブラウザのURL欄に"chrome://version/"と入力して、プロフィールパスに記載の内容を入力(User Data以降は不要。￥は/に置換する) |
+| `"profile_path"` | ログイン情報の保存先ディレクトリ | 任意のディレクトリを作成して、指定してください。(Chromeのデフォルトパス(~/User Data)を指定するとエラーとなる。￥は/に置換する) |
 | `"form_url"` | フォームURL | フォームのURL。変更不要 |
 | `record_the_email_address_to_reply` | 返信に表示するメールアドレスとしてxxxを記録する | `true`で固定 |
 | `"event_name"` | イベント名 | 文字列 |
@@ -76,10 +84,10 @@ psutil
 https://github.com/user-attachments/assets/9ff533b1-1379-400f-ab65-2a4ad248d30e
 
 ## 🧑‍💻 更新履歴
-
-- 2024/4/6　デモ動画を掲載
-- 2024/3/17　新フォームに対応
-- 2024/3/24　バグ修正、実行ログが表示されるように修正
+- 2025/5/11 Chromeのセキュリティアップデートで動かなくなっていたので違う方法に変更
+- 2025/4/6　デモ動画を掲載
+- 2025/3/17　新フォームに対応
+- 2025/3/24　バグ修正、実行ログが表示されるように修正
 
 =======
 
