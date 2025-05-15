@@ -1,4 +1,4 @@
-# 🎭 VRC Event Calendar Autofill
+# VRC Event Calendar Autofill
 
 このスクリプトは、**VRC Event Calendar** のGoogleフォームに自動で定型文を入力します。
 繰り返しの入力作業を省き、イベント運営を効率化できます🚀
@@ -6,33 +6,16 @@
 ---
 
 ## 🛠 構成ファイル
-
-- `create_profile.py` … メイン処理その1（Googleアカウントの事前ログイン処理）
-- `autofill.py` … メイン処理その2（Googleフォームを開き、情報を入力）
-- `form_utils.py` … 入力・選択などの共通処理をまとめた関数群
 - `config.json` … 入力内容の設定ファイル
-- `requirements.txt` … 必要なPythonライブラリの一覧
+- `create_profile.exe` … メイン処理その1（Googleアカウントログインによるプロファイル作成）
+- `autofill.exe` … メイン処理その2（Googleフォームを開き、情報自動入力）
 
 ## 📌 使い方
-1. **Chromeブラウザ、pythonをインストール（バージョン3.8以上推奨）**
-2. **python実行環境でこのモジュールをクローン**
-   ```bash
-   git clone https://github.com/hamikuma/vrc-event-calendar-autofill.git
-   ```
-3. **必要なライブラリをインストール**
-   ```bash
-   pip install -r requirements.txt
-   ```
-4. **`config.json` を編集してイベント内容を記入**
-5. **`create_profile.py`を実行して、Googleアカウントにログイン(ログイン情報の作成)**
-   ```bash
-   python create_profile.py
-   ```
-6. **Chromeブラウザを全て閉じた状態で`autofill.py`を実行**
-   ```bash
-   python autofill.py
-   ```
-
+1. **Chromeブラウザをインストール**
+2. **モジュールをダウンロードし、解凍。→最新版(https://github.com/hamikuma/vrc-event-calendar-autofill/releases/latest)**
+3. **`config.json` を編集してイベント内容を記入**
+4. **`create_profile.exe`を実行して、Googleアカウントにログイン(ログイン情報の作成)**
+5. **Chromeブラウザを全て閉じた状態で`autofill.exe`を実行**
 
 ---
 
@@ -61,28 +44,12 @@
 | `"x_announcement"` | X告知文 | |
 
 ---
-
-## ✅ 補足事項
-
-- スクリプト`autofill.py`は**Chromeが起動していない状態**でのみ実行可能です。
-- 入力が完了すると、ブラウザは開いたまま終了します。
-
----
-
-## 📦 依存ライブラリ（requirements.txt）
-
-```
-selenium
-webdriver-manager
-psutil
-```
-
----
 ## 🎥 デモ動画
 
 https://github.com/user-attachments/assets/9ff533b1-1379-400f-ab65-2a4ad248d30e
 
 ## 🧑‍💻 更新履歴
+- 2025/5/16 パッケージ化
 - 2025/5/11 Chromeのセキュリティアップデートで動かなくなっていたので違う方法に変更
 - 2025/4/6　デモ動画を掲載
 - 2025/3/17　新フォームに対応

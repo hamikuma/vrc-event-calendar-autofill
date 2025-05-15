@@ -2,6 +2,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
+import sys
+import os
+import tkinter as tk
+from tkinter import messagebox
 
 # ========================
 # ログ出力関数
@@ -9,7 +13,7 @@ import time
 def log_success(message):
     print(f"✅ {message}")
 
-def log_failure(message):
+def log_failure(message="続行するには Enter を押してください。"):
     print(f"⚠ {message}")
 
 # ========================
@@ -172,3 +176,12 @@ def wait_for_form_section_change(driver, previous_section):
     except Exception as e:
         log_failure(f"セクション切り替え待ちに失敗: {e}")
         raise
+
+def get_config_path(filename="config.json"):
+    if getattr(sys, 'frozen', False):
+        # PyInstallerでビルドされた実行ファイルの場合（.exe）
+        base_path = os.path.dirname(sys.executable)
+    else:
+        # 通常の.pyスクリプト実行時
+        base_path = os.path.dirname(os.path.abspath(__file__))
+    return os.path.join(base_path, filename)

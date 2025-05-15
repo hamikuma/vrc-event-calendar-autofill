@@ -14,7 +14,7 @@ from form_utils import (
     fill_input_by_label, fill_textarea_by_label,
     select_option_by_label, click_button_by_text,
     fill_datetime_by_label, check_multiple_checkboxes_by_labels,
-    wait_for_label, wait_for_form_section_change, select_radio_by_label
+    wait_for_label, wait_for_form_section_change, select_radio_by_label, get_config_path
 )
 
 # ========================
@@ -35,26 +35,29 @@ def cleanup(driver=None):
             driver.quit()
     except Exception as e:
         log_failure(f"WebDriver終了中にエラー: {e}")
+        input("終了します。何かキーを押してください")
 
 # ========================
 # 設定ファイル（config.json）の読み込み
 # ========================
-script_dir = os.path.dirname(os.path.abspath(__file__))
-config_path = os.path.join(script_dir, "config.json")
+config_path = get_config_path()
+
 
 try:
     with open(config_path, "r", encoding="utf-8") as f:
         config = json.load(f)
 except FileNotFoundError as e:
     log_failure(f"設定ファイルが見つかりません: {config_path} {e}")
-    exit(1)
+    input("終了します。何かキーを押してください")
+    sys.exit(1)
 
 # ========================
 # Chromeが起動中なら警告を出して終了
 # ========================
 if is_chrome_running():
     log_failure(f"Chromeが既に起動しています。すべてのChromeを閉じてから再実行してください。")
-    exit(1)
+    input("終了します。何かキーを押してください")
+    sys.exit(1)
 
 # ========================
 # Chrome WebDriverのオプションを設定
@@ -70,13 +73,26 @@ options.add_experimental_option("excludeSwitches", ["enable-logging"])  # DevToo
 # ========================
 # WebDriverを起動
 # ========================
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
-wait = WebDriverWait(driver, 2)
+try:
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+    wait = WebDriverWait(driver, 2)
+except FileNotFoundError as e:
+    log_failure(f"WebDriverの起動に失敗しました。")
+    input("終了します。何かキーを押してください")
+    sys.exit(1)
+
 
 # ========================
 # Googleフォームを開く
 # ========================
-driver.get(config["form_url"])
+
+try:
+    driver.get(config["form_url"])
+except FileNotFoundError as e:
+    log_failure(f"Googleフォームを開くのに失敗しました")
+    input("終了します。何かキーを押してください")
+    sys.exit(1)
+
 
 # ========================
 # 本番処理：フォームの自動入力
@@ -122,4 +138,5 @@ if config.get("overseas_announcement"):
 fill_textarea_by_label(driver, wait, "X告知文", config["x_announcement"])
 
 log_success("自動入力完了。スクリプトを終了します（ブラウザはそのまま）。")
+input("終了します。ウィンドウを閉じてください。")
 sys.exit()

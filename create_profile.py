@@ -3,20 +3,20 @@ import subprocess
 import sys
 import json
 from pathlib import Path
+
 from form_utils import (
     log_success, log_failure,
     fill_input_by_label, fill_textarea_by_label,
     select_option_by_label, click_button_by_text,
     fill_datetime_by_label, check_multiple_checkboxes_by_labels,
-    wait_for_label, wait_for_form_section_change, select_radio_by_label
+    wait_for_label, wait_for_form_section_change, select_radio_by_label, get_config_path
 )
 
 
 # ========================
 # 設定ファイル（config.json）の読み込み
 # ========================
-script_dir = os.path.dirname(os.path.abspath(__file__))
-config_path = os.path.join(script_dir, "config.json")
+config_path = get_config_path()
 
 try:
     with open(config_path, "r", encoding="utf-8") as f:
@@ -24,7 +24,8 @@ try:
         
 except FileNotFoundError as e:
     log_failure(f"設定ファイルが見つかりません: {config_path}")
-    exit(1)
+    input("終了します。何かキーを押してください")
+    sys.exit(1)
 
 # === プロファイル格納先の設定 ===
 profile_dir = config["profile_path"]
@@ -32,6 +33,7 @@ profile_dir = config["profile_path"]
 # === ディレクトリが存在しなければ警告 ===
 if not os.path.exists(profile_dir):
     log_failure(f"プロファイルディレクトリが見つかりません。作成してください。: {profile_dir}")
+    input("終了します。何かキーを押してください")
     sys.exit(1)
 
 # === Chromeの実行ファイルを探す（一般的な2パターン）===
@@ -48,6 +50,7 @@ for path in chrome_paths:
 
 if not chrome_exe:
     log_failure("Chromeの実行ファイルが見つかりません。手動でパスを指定してください。")
+    input("終了します。何かキーを押してください")
     sys.exit(1)
 
 # === Chrome起動コマンドの準備 ===
@@ -57,12 +60,12 @@ launch_cmd = [
     '--profile-directory=Default'
 ]
 
-log_success(f"Chromeを以下の専用プロファイルで起動します:\n{profile_dir}")
-log_success("➡ このChromeウィンドウで Google にログインし、完了後に閉じてください。\n")
+log_success(f"Googleログインを実施いただき以下に専用プロファイルを作成します。:\n{profile_dir}")
 
 # === Chromeを起動 ===
 subprocess.Popen(launch_cmd)
 
 # 待機させることでユーザーに説明を見せる
-input("✅ Chromeが起動しました。ログインが完了したら Enter を押してください。")
-log_success(f"プロファイルの作成が完了しました。Chromeブラウザを全て閉じてからautofill.pyを実行してください。")
+log_success(f"Chromeが起動しました。")
+input("Googleログインが完了したら何かキーを押してください。その後、autofill.exeを実行してください。")
+sys.exit(1)
