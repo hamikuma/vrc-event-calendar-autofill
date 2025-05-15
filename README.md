@@ -12,7 +12,7 @@
 
 ## 📌 使い方
 1. **Chromeブラウザをインストール**
-2. **モジュールをダウンロードし、解凍。→最新版(https://github.com/hamikuma/vrc-event-calendar-autofill/releases/latest)**
+2. **`vrc-event-calendar-autofill-v*.*.zip` をダウンロードし、解凍。→最新版(https://github.com/hamikuma/vrc-event-calendar-autofill/releases/latest)**
 3. **`config.json` を編集してイベント内容を記入**
 4. **`create_profile.exe`を実行して、Googleアカウントにログイン(ログイン情報の作成)**
 5. **Chromeブラウザを全て閉じた状態で`autofill.exe`を実行**
@@ -21,7 +21,7 @@
 
 ## 📝 `config.json` の設定項目
 
-`config.json` を編集して、Googleフォームに入力する内容を設定してください。
+`config.json` を編集して、VRCイベントカレンダーに入力する内容を設定してください。
 `config.json` に既に記載している内容を参考に書き換えてください。以下詳細説明です。
 
 | **キー** | **内容** | **備考** |
