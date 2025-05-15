@@ -1,7 +1,5 @@
 import json
-import os
 import time
-import signal
 import sys
 from datetime import datetime
 import psutil
@@ -9,6 +7,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
+from pathlib import Path
 from form_utils import (
     log_success, log_failure,
     fill_input_by_label, fill_textarea_by_label,
@@ -35,7 +34,7 @@ def cleanup(driver=None):
             driver.quit()
     except Exception as e:
         log_failure(f"WebDriver終了中にエラー: {e}")
-        input("終了します。何かキーを押してください")
+        input("終了します。Enterキーを押してください")
 
 # ========================
 # 設定ファイル（config.json）の読み込み
@@ -48,7 +47,7 @@ try:
         config = json.load(f)
 except FileNotFoundError as e:
     log_failure(f"設定ファイルが見つかりません: {config_path} {e}")
-    input("終了します。何かキーを押してください")
+    input("終了します。Enterキーを押してください")
     sys.exit(1)
 
 # ========================
@@ -56,14 +55,15 @@ except FileNotFoundError as e:
 # ========================
 if is_chrome_running():
     log_failure(f"Chromeが既に起動しています。すべてのChromeを閉じてから再実行してください。")
-    input("終了します。何かキーを押してください")
+    input("終了します。Enterキーを押してください")
     sys.exit(1)
 
 # ========================
 # Chrome WebDriverのオプションを設定
 # ========================
 options = webdriver.ChromeOptions()
-options.add_argument('--user-data-dir=' + config["profile_path"])
+profile_path = Path(config.get("profile_path", "").strip()).as_posix()
+options.add_argument('--user-data-dir=' + profile_path)
 options.add_argument('--profile-directory=Default')
 options.add_argument("--start-maximized")
 options.add_experimental_option("detach", True)
@@ -78,7 +78,7 @@ try:
     wait = WebDriverWait(driver, 2)
 except FileNotFoundError as e:
     log_failure(f"WebDriverの起動に失敗しました。")
-    input("終了します。何かキーを押してください")
+    input("終了します。Enterキーを押してください")
     sys.exit(1)
 
 
@@ -90,7 +90,7 @@ try:
     driver.get(config["form_url"])
 except FileNotFoundError as e:
     log_failure(f"Googleフォームを開くのに失敗しました")
-    input("終了します。何かキーを押してください")
+    input("終了します。Enterキーを押してください")
     sys.exit(1)
 
 

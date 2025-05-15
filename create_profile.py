@@ -24,7 +24,7 @@ try:
         
 except FileNotFoundError as e:
     log_failure(f"設定ファイルが見つかりません: {config_path}")
-    input("終了します。何かキーを押してください")
+    input("終了します。Enterキーを押してください")
     sys.exit(1)
 
 # === プロファイル格納先の設定 ===
@@ -33,7 +33,7 @@ profile_dir = config["profile_path"]
 # === ディレクトリが存在しなければ警告 ===
 if not os.path.exists(profile_dir):
     log_failure(f"プロファイルディレクトリが見つかりません。作成してください。: {profile_dir}")
-    input("終了します。何かキーを押してください")
+    input("終了します。Enterキーを押してください")
     sys.exit(1)
 
 # === Chromeの実行ファイルを探す（一般的な2パターン）===
@@ -50,7 +50,7 @@ for path in chrome_paths:
 
 if not chrome_exe:
     log_failure("Chromeの実行ファイルが見つかりません。手動でパスを指定してください。")
-    input("終了します。何かキーを押してください")
+    input("終了します。Enterキーを押してください")
     sys.exit(1)
 
 # === Chrome起動コマンドの準備 ===
@@ -67,5 +67,5 @@ subprocess.Popen(launch_cmd)
 
 # 待機させることでユーザーに説明を見せる
 log_success(f"Chromeが起動しました。")
-input("Googleログインが完了したら何かキーを押してください。その後、autofill.exeを実行してください。")
+input("Googleログインが完了したらEnterキーを押してください。その後、autofill.exeを実行してください。")
 sys.exit(1)

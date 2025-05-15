@@ -26,7 +26,7 @@
 
 | **キー** | **内容** | **備考** |
 |---------|---------|---------|
-| `"profile_path"` | ログイン情報の保存先ディレクトリ | 任意のディレクトリを作成して、指定してください。(Chromeのデフォルトパス(~/User Data)を指定するとエラーとなる。￥は/に置換する) |
+| `"profile_path"` | ログイン情報の保存先ディレクトリ | 任意のディレクトリ(※1)を作成して、指定してください。￥は/に置換してください。 |
 | `"form_url"` | フォームURL | フォームのURL。変更不要 |
 | `record_the_email_address_to_reply` | 返信に表示するメールアドレスとしてxxxを記録する | `true`で固定。変更不要 |
 | `"event_name"` | イベント名 | 文字列 |
@@ -44,9 +44,11 @@
 | `"x_announcement"` | X告知文 | |
 
 ---
-## 🎥 デモ動画
+## ❌ 注意
+※1 profile_pathはChromeのデフォルトパス(例：C:\Users\CurrentUser\AppData\Local\Google\Chrome\User Data)を指定するとエラーとなるので、別の保存先を用意してください。
 
-https://github.com/user-attachments/assets/9ff533b1-1379-400f-ab65-2a4ad248d30e
+## 🎥 デモ動画
+(作成中)
 
 ## 🧑‍💻 更新履歴
 - 2025/5/16 パッケージ化
