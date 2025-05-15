@@ -62,8 +62,7 @@ if is_chrome_running():
 # Chrome WebDriverのオプションを設定
 # ========================
 options = webdriver.ChromeOptions()
-profile_path = Path(config.get("profile_path", "").strip()).as_posix()
-options.add_argument('--user-data-dir=' + profile_path)
+options.add_argument('--user-data-dir=' + config["profile_path"])
 options.add_argument('--profile-directory=Default')
 options.add_argument("--start-maximized")
 options.add_experimental_option("detach", True)
