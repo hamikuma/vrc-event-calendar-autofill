@@ -48,12 +48,11 @@
 ※1 profile_pathはChromeのデフォルトパス(例：C:\Users\CurrentUser\AppData\Local\Google\Chrome\User Data)を指定するとエラーとなるので、別の保存先を用意してください。
 
 ## 🎥 デモ動画
-(作成中)
+https://github.com/user-attachments/assets/6c973090-cc8b-4ba0-9659-d0e73a78031e
 
 ## 🧑‍💻 更新履歴
 - 2025/5/16 パッケージ化
 - 2025/5/11 Chromeのセキュリティアップデートで動かなくなっていたので違う方法に変更
-- 2025/4/6　デモ動画を掲載
 - 2025/3/17　新フォームに対応
 - 2025/3/24　バグ修正、実行ログが表示されるように修正
 
