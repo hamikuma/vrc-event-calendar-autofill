@@ -28,7 +28,10 @@ except FileNotFoundError as e:
     sys.exit(1)
 
 # === プロファイル格納先の設定 ===
-profile_dir = config["profile_path"]
+if getattr(sys, 'frozen', False):
+    profile_dir = os.path.dirname(sys.executable) + "\profile"
+else:
+    profile_dir = os.path.dirname(os.path.abspath(__file__)) + "\profile"
 
 # === ディレクトリが存在しなければ警告 ===
 if not os.path.exists(profile_dir):

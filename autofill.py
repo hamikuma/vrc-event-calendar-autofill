@@ -1,6 +1,6 @@
 import json
 import time
-import sys
+import sys, os
 from datetime import datetime
 import psutil
 from selenium import webdriver
@@ -59,10 +59,19 @@ if is_chrome_running():
     sys.exit(1)
 
 # ========================
+#  プロファイル格納先の設定 
+# ========================
+
+if getattr(sys, 'frozen', False):
+    profile_dir = os.path.dirname(sys.executable) + "\\profile"
+else:
+    profile_dir = os.path.dirname(os.path.abspath(__file__)) + "\\profile"
+
+# ========================
 # Chrome WebDriverのオプションを設定
 # ========================
 options = webdriver.ChromeOptions()
-options.add_argument('--user-data-dir=' + config["profile_path"])
+options.add_argument('--user-data-dir=' + profile_dir)
 options.add_argument('--profile-directory=Default')
 options.add_argument("--start-maximized")
 options.add_experimental_option("detach", True)
