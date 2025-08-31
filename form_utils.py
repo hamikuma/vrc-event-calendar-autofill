@@ -1,3 +1,45 @@
+def retry_func(func, *args, max_retries=3, **kwargs):
+    """
+    任意の関数を最大max_retries回までリトライするラッパー。
+    func: 実行する関数
+    *args, **kwargs: 関数の引数
+    max_retries: 最大リトライ回数
+    """
+    for attempt in range(1, max_retries + 1):
+        try:
+            func(*args, **kwargs)
+            return True
+        except Exception as e:
+            log_failure(f"リトライ {attempt}/{max_retries}: {e}")
+            time.sleep(0.5)
+    return False
+
+def fill_input_by_label_with_retry(driver, wait, label_text, value, max_retries=3):
+    return retry_func(fill_input_by_label, driver, wait, label_text, value, max_retries=max_retries)
+
+def fill_textarea_by_label_with_retry(driver, wait, label_text, value, max_retries=3):
+    return retry_func(fill_textarea_by_label, driver, wait, label_text, value, max_retries=max_retries)
+
+def select_option_by_label_with_retry(driver, wait, label_text, option_text, max_retries=3):
+    return retry_func(select_option_by_label, driver, wait, label_text, option_text, max_retries=max_retries)
+
+def click_button_by_text_with_retry(driver, wait, button_text, max_retries=3):
+    return retry_func(click_button_by_text, driver, wait, button_text, max_retries=max_retries)
+
+def fill_datetime_by_label_with_retry(driver, wait, label_text, date_str, hour_str, minute_str, max_retries=3):
+    return retry_func(fill_datetime_by_label, driver, wait, label_text, date_str, hour_str, minute_str, max_retries=max_retries)
+
+def check_multiple_checkboxes_by_labels_with_retry(driver, wait, label_text, target_labels, max_retries=3):
+    return retry_func(check_multiple_checkboxes_by_labels, driver, wait, label_text, target_labels, max_retries=max_retries)
+
+def select_radio_by_label_with_retry(driver, wait, label_text, option_text, max_retries=3):
+    return retry_func(select_radio_by_label, driver, wait, label_text, option_text, max_retries=max_retries)
+
+def wait_for_label_with_retry(driver, label_text, timeout=10, max_retries=3):
+    return retry_func(wait_for_label, driver, label_text, timeout, max_retries=max_retries)
+
+def wait_for_form_section_change_with_retry(driver, previous_section, max_retries=3):
+    return retry_func(wait_for_form_section_change, driver, previous_section, max_retries=max_retries)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -64,6 +106,15 @@ def select_option_by_label(driver, wait, label_text, option_text):
         log_success(f"「{label_text}」に「{option_text}」を選択しました")
     except Exception as e:
         log_failure(f"「{label_text}」の選択に失敗しました: {e}")
+
+def retry_select_option_by_label(driver, wait, label_text, option_text, max_retries=3):
+    for attempt in range(max_retries):
+        try:
+            select_option_by_label(driver, wait, label_text, option_text)
+            return True
+        except Exception as e:
+            time.sleep(0.5)
+    return False
 
 def click_button_by_text(driver, wait, button_text):
     time.sleep(0.5)

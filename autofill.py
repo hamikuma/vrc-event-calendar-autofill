@@ -10,10 +10,10 @@ from webdriver_manager.chrome import ChromeDriverManager
 from pathlib import Path
 from form_utils import (
     log_success, log_failure,
-    fill_input_by_label, fill_textarea_by_label,
-    select_option_by_label, click_button_by_text,
-    fill_datetime_by_label, check_multiple_checkboxes_by_labels,
-    wait_for_label, wait_for_form_section_change, select_radio_by_label, get_config_path
+    fill_input_by_label_with_retry, fill_textarea_by_label_with_retry,
+    select_option_by_label_with_retry, click_button_by_text_with_retry,
+    fill_datetime_by_label_with_retry, check_multiple_checkboxes_by_labels_with_retry,
+    wait_for_label_with_retry, wait_for_form_section_change_with_retry, select_radio_by_label_with_retry, get_config_path
 )
 
 # ========================
@@ -106,7 +106,7 @@ except FileNotFoundError as e:
 # 本番処理：フォームの自動入力
 # ========================
 
-email_checkbox = wait.until(lambda d: d.find_element("xpath", "//div[@role='checkbox' and contains(@aria-label, '返信に表示するメールアドレス')]"))
+email_checkbox = wait.until(lambda d: d.find_element("xpath", "//div[@role='checkbox' and contains(@aria-label, '返信に表示するメールアドレス')]") )
 time.sleep(0.5)
 if config.get("record_the_email_address_to_reply"):
     if email_checkbox.get_attribute("aria-checked") != "true":
@@ -117,34 +117,34 @@ else:
         email_checkbox.click()
         log_success("メールアドレスのチェックをOFFにしました")
 
-fill_input_by_label(driver, wait, "イベント名", config["event_name"])
-select_radio_by_label(driver, wait, "Android対応可否", config.get("android_support", "PC/android"))
+fill_input_by_label_with_retry(driver, wait, "イベント名", config["event_name"])
+select_radio_by_label_with_retry(driver, wait, "Android対応可否", config.get("android_support", "PC/android"))
 
 start_date = config.get("start_date", "").strip() or datetime.today().strftime("%Y-%m-%d")
 end_date = config.get("end_date", "").strip() or datetime.today().strftime("%Y-%m-%d")
 
-fill_datetime_by_label(driver, wait, "開始日時", start_date, config["start_hour"], config["start_minute"])
-fill_datetime_by_label(driver, wait, "終了日時", end_date, config["end_hour"], config["end_minute"])
+fill_datetime_by_label_with_retry(driver, wait, "開始日時", start_date, config["start_hour"], config["start_minute"])
+fill_datetime_by_label_with_retry(driver, wait, "終了日時", end_date, config["end_hour"], config["end_minute"])
 
-select_option_by_label(driver, wait, "イベントを登録しますか", "イベントを登録する")
+select_option_by_label_with_retry(driver, wait, "イベントを登録しますか", "イベントを登録する")
 
 previous_section = driver.find_element("xpath", "//div[@role='list']")
-click_button_by_text(driver, wait, "次へ")
-wait_for_form_section_change(driver, previous_section)
-wait_for_label(driver, "イベント主催者")
+click_button_by_text_with_retry(driver, wait, "次へ")
+wait_for_form_section_change_with_retry(driver, previous_section)
+wait_for_label_with_retry(driver, "イベント主催者")
 
-fill_input_by_label(driver, wait, "イベント主催者", config["event_host"])
-fill_textarea_by_label(driver, wait, "イベント内容", config["event_content"])
-check_multiple_checkboxes_by_labels(driver, wait, "イベントジャンル", config["genres"])
-fill_textarea_by_label(driver, wait, "参加条件", config["participation_conditions"])
-fill_textarea_by_label(driver, wait, "参加方法", config["participation_method"])
-fill_textarea_by_label(driver, wait, "備考", config["remarks"])
+fill_input_by_label_with_retry(driver, wait, "イベント主催者", config["event_host"])
+fill_textarea_by_label_with_retry(driver, wait, "イベント内容", config["event_content"])
+check_multiple_checkboxes_by_labels_with_retry(driver, wait, "イベントジャンル", config["genres"])
+fill_textarea_by_label_with_retry(driver, wait, "参加条件", config["participation_conditions"])
+fill_textarea_by_label_with_retry(driver, wait, "参加方法", config["participation_method"])
+fill_textarea_by_label_with_retry(driver, wait, "備考", config["remarks"])
 
 if config.get("overseas_announcement"):
-    select_option_by_label(driver, wait, "海外ユーザー向け告知", "希望する")
+    select_option_by_label_with_retry(driver, wait, "海外ユーザー向け告知", "希望する")
 
-fill_textarea_by_label(driver, wait, "X告知文", config["x_announcement"])
+fill_textarea_by_label_with_retry(driver, wait, "X告知文", config["x_announcement"])
 
-log_success("自動入力完了。スクリプトを終了します（ブラウザはそのまま）。")
-input("終了します。ウィンドウを閉じてください。")
+log_success("自動入力完了。10秒後にスクリプトを終了します（ブラウザはそのまま）。")
+time.sleep(10)
 sys.exit()

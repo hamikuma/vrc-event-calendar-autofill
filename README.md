@@ -50,6 +50,7 @@
 https://github.com/user-attachments/assets/6c973090-cc8b-4ba0-9659-d0e73a78031e
 
 ## 🧑‍💻 更新履歴
+- 2025/8/31 安定性向上、自動終了処理追加
 - 2025/6/15 profileを、config.jsonで指定ではなく実行フォルダ配下で生成する仕様に変更
 - 2025/5/16 パッケージ化
 
